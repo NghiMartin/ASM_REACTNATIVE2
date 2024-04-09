@@ -5,9 +5,12 @@ import { ToastAndroid } from "react-native";
 const getAllCart = async (idUser) => {
     try {
     const response = await axios.get(`${baseURL}/cart/list?idUser=${idUser}`);
-    const data =  response.data;
-    console.log(data); 
-  return data.data;
+    if(response.status === 200 || 304){
+      const data =  response.data;
+      console.log(data); 
+    return data.data;
+    }
+  
     } catch (error) {
         console.error('Đã xảy ra lỗi:', error);
     }
@@ -25,7 +28,7 @@ const increaseCart = async (obj) => {
             //   );
           return data.data;
           } else {
-            console.error('Xảy ra lỗi getListCart');
+            console.error('Xảy ra lỗi AddtCart');
           }
           console.log(data.json());
         } catch (error) {
@@ -40,7 +43,7 @@ const decreaseCart = async (obj) => {
             console.log({data})
           return data.data;
           } else {
-            console.error('Xảy ra lỗi getListCart');
+            console.error('Xảy ra lỗi DecreaseCart');
           }
           console.log(data.json());
         } catch (error) {

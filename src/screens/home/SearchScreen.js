@@ -16,7 +16,8 @@ import {useState} from 'react';
 import {getDataBySearch} from '../../api/product/getAllData';
 import ItemSearchProduct from '../../components/ItemSearchProduct';
 import NavigatorHeader from '../../components/NavigatorHeader';
-
+import {useDispatch, useSelector} from 'react-redux';
+import { addToHistoryData, removeFromHistoryData, setHistoryData } from '../../store/productSlice';
 const data = [
   {
     key: 1,
@@ -36,14 +37,26 @@ const data = [
   },
 ];
 export default function SearchScreen({navigation}) {
-  const [search, setSearch] = useState('');
-  const [dataProductSearch, setdataProductSearch] = useState([]);
+  const dispatch = useDispatch();
+  const searchHistoryData = useSelector((state) => state.product.searchHistoryData);
+  const [dataProductSearch, setdataProductSearch] = useState();
+  const [search, setSearch] = useState();
+console.log({searchHistoryData});
+  const handleRemoveHistory = (name) => {
+      name && dispatch(removeFromHistoryData(name));
+  }
+  const getAllDataSearchHandle = async (name) => {
+    const data =  await getDataBySearch({key: name});
+    data && setdataProductSearch(data);
+    return data;
+
+  }
 
   const hadleSearchProduct = async () => {
     if (search) {
-      const data = await getDataBySearch({key: search});
+     const data =  await getAllDataSearchHandle(search);
       console.log({data});
-      data && setdataProductSearch(data);
+      data && dispatch(addToHistoryData(search));
     } else {
       ToastAndroid.showWithGravity(
         `Vui lòng nhập thông tin tìm kiếm!`,
@@ -80,13 +93,13 @@ export default function SearchScreen({navigation}) {
           style={{marginBottom: 100}}>
           {search ? null : (
             <View>
-              {data && <Text>Tìm kiếm gần đây</Text>}
-              {data &&
-                data.map(item => <ItemSearch data={item} key={item.key} />)}
-            </View>
+              {searchHistoryData.length > 0 && <Text>Tìm kiếm gần đây</Text>}
+              {
+                searchHistoryData.length > 0 && searchHistoryData?.map((item, index )=> <ItemSearch onPressItem={getAllDataSearchHandle} onPressRemove={handleRemoveHistory} data={item} key={index} />)}
+                </View>    
           )}
-          {dataProductSearch &&
-            dataProductSearch.map(item => (
+          {dataProductSearch && 
+            dataProductSearch?.map(item => (
               <ItemSearchProduct navigation={navigation} data={item} key={item._id} />
               // <ItemCartProduct data ={item} key ={item._id} />
             ))}

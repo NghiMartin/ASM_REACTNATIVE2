@@ -7,6 +7,7 @@ import AuthNavigator from './AuthNavigator';
 import { verifyToken } from '../api/auth/AuthApi';
 import { getToken, removeToken } from '../api/auth/KeyChain';
 import { removeUser } from '../store/userSlice';
+import { clearHistoryData } from '../store/productSlice';
 
 const AppRouters = () => {
   const [isShowSplash, setIsShowSplash] = useState(true);
@@ -33,6 +34,7 @@ const AppRouters = () => {
  const resetData = async() => {
   setauthToken(false);
   dispatch(removeUser(null));
+  dispatch(clearHistoryData());
   await removeToken();
    
  }

@@ -3,9 +3,12 @@ import { combineReducers } from 'redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import userReducer from './userSlice';
+import productReducer from './productSlice';
+
 
 const rootReducer = combineReducers({
     user : userReducer,
+    product: productReducer
 });
 
 const persistConfig = {
