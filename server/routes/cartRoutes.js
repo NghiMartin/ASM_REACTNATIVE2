@@ -11,7 +11,6 @@ router.post("/add", async (req, res) => {
   
       // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng hay chưa
       const existingCartItem = await modelCart.findOne({ idUser, idProduct });
-  
       if (existingCartItem) {
         // Nếu sản phẩm đã tồn tại, cập nhật số lượng sản phẩm lên thêm 1
         existingCartItem.quantity += 1;

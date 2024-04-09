@@ -1,6 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import CustomButton from "./CustomButton";
+import { COLORS, FONTFAMILY } from "../assets";
 
 export default function PaymentFooter({onPress, getpriceTotal}) {
   
@@ -29,13 +30,13 @@ const styles = StyleSheet.create({
     price: {
       color: 'black',
       fontSize: 16,
-      fontFamily: 'Lato',
+      fontFamily: FONTFAMILY.poppins_medium,
       fontWeight: '500',
       lineHeight: 22,
     },
     titlePay: {
       fontSize: 14,
-      fontFamily: 'Lato',
+      fontFamily: FONTFAMILY.poppins_medium,
       fontWeight: '400',
       lineHeight: 20,
     },
@@ -46,22 +47,24 @@ const styles = StyleSheet.create({
       width: '100%'
     },
     main: {
-      paddingHorizontal: 24,
+      paddingHorizontal: 10,
     },
     payMent: {
+      height: 200,
+      backgroundColor: COLORS.WHITE,
       position: 'absolute',
       width: '100%',
       marginHorizontal: 'auto',
       alignItems: 'center',
       flexDirection: 'column',
-      bottom: 20,
+      bottom: 0,
       justifyContent: 'center',
       paddingHorizontal: 28,
     },
     txtCartNull: {
       color: 'black',
       fontSize: 14,
-      fontFamily: 'Lato',
+      fontFamily: FONTFAMILY.poppins_medium,
       fontWeight: '400',
       lineHeight: 20,
       width: '100%',

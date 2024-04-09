@@ -53,7 +53,9 @@ const HomePageScreen = props => {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    >
       <View style={[styles.container]}>
         <StatusBar
           translucent
@@ -67,7 +69,7 @@ const HomePageScreen = props => {
             title={'Cây trồng'}
             quantityShow={4}
             style={{marginTop: 15, paddingHorizontal: 25}}
-            onPressShowMore={() => navigation.navigate('Regular', dataAllPlant)}
+            onPressShowMore={() => navigation.navigate('MoreProduct', {data :dataAllPlant, isCategory : true})}
             txtShowMore={true}
             navigation={navigation}
           />
@@ -77,10 +79,12 @@ const HomePageScreen = props => {
 
         {dataAllPotPlant ? (
           <Show4Product
+          navigation = {navigation}
             data={dataAllPotPlant}
             quantityShow={4}
             txtShowMore={true}
             title={'Chậu cây trồng'}
+            onPressShowMore={() => navigation.navigate('MoreProduct', {data :dataAllPotPlant})}
             style={{marginTop: 15, paddingHorizontal: 25}}
           />
         ) : (
@@ -92,6 +96,7 @@ const HomePageScreen = props => {
             quantityShow={4}
             navigation={navigation}
             txtShowMore={true}
+            onPressShowMore={() => navigation.navigate('MoreProduct', {data :dataAllCareTool})}
             title={'Phụ kiện'}
             style={{marginTop: 15, paddingHorizontal: 25}}
           />

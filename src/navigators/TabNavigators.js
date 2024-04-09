@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { HomePageScreen } from '../screens';
 import TabBarIcon from '../components/TabBarIcon';
-import UserScreen from '../screens/home/UserScreen';
+import UserScreen from '../screens/profile/UserScreen';
 import SearchScreen from '../screens/home/SearchScreen';
 
 const tabIcons = {

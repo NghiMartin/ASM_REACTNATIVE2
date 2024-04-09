@@ -1,9 +1,11 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, FONTFAMILY, FONTSIZE } from "../assets";
 
-export default function ItemSearchProduct ({data, onPress}) {
+export default function ItemSearchProduct ({navigation, data, onPress}) {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity
+        onPress={() => navigation.navigate('ProductDetail', {data: data})}
+        style={styles.container}>
             <Image
             source={require('../assets/images/imgProduct.png')}
             style={styles.image}
@@ -13,7 +15,7 @@ export default function ItemSearchProduct ({data, onPress}) {
             <Text style={styles.title}>{data.price} đ </Text>
             <Text style={styles.status}>{data.status} </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

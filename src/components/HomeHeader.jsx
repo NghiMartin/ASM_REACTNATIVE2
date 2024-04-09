@@ -6,7 +6,6 @@ export default function HomeHeader ({navigation}) {
         <View style={styles.header}>
         <View style={styles.mainHeader}>
           <Image source={require('../assets/images/imgHeader.png')} style={styles.imgMainHeader} />
-          
         </View>
         <View style={styles.topHeader}>
           <Text style={styles.title}>Planta - toả sáng{`\n`}không gian nhà bạn</Text>

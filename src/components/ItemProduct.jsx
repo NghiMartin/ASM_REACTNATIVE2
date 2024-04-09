@@ -6,7 +6,7 @@ import { AddSquare } from 'iconsax-react-native';
 import { increaseCart } from '../api/cart/cartApi';
 import { useDispatch, useSelector } from 'react-redux';
 
-const RenderItems = ({ data, navigation }) => {
+const RenderItems = ({ data, navigation, isHidebtnAdd }) => {
   const user = useSelector((state) => state.user);
 
 const handleAddCart= async (idProduct,size,price)=> {
@@ -18,7 +18,7 @@ const handleAddCart= async (idProduct,size,price)=> {
     })
 }
     return data.map(item => (
-        <TouchableOpacity key={item?._id} style={styles.item} onPress={() => navigation.navigate('Panse', {product: item})}>
+        <TouchableOpacity key={item?._id} style={styles.item} onPress={() => navigation.navigate('ProductDetail', {data: item})}>
             <Image source={{uri: item.image[0]}} 
                 style={styles.imgProduct}
                 resizeMode='contain' />
@@ -26,23 +26,25 @@ const handleAddCart= async (idProduct,size,price)=> {
             <Text style={styles.txtType}>{item?.detailType || 'Ưa bóng'}</Text>
             <Text style={styles.txtPrice}>{item?.price + ' đ' || '250.000đ'}</Text>
             <View style={styles.btnAddCart}>
-            <CustomButton
+           { isHidebtnAdd || <CustomButton
             isIcon={true}
             onPress={ () => handleAddCart(item?._id, item?.product?.size, item?.price)}
             Icon={<AddSquare
                 size="32"
                 color={COLORS.greenHex}
                />}
-            />
+            />}
             </View>
           
         </TouchableOpacity>
     ));
 };
-const ItemProduct = ({data, navigation}) => {
+const ItemProduct = ({data, navigation, isHidebtnAdd}) => {
+    console.log(isHidebtnAdd);
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <RenderItems
+            isHidebtnAdd ={isHidebtnAdd}
                 data={data}
                 navigation={navigation} />
         </ScrollView>

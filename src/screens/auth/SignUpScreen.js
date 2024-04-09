@@ -25,26 +25,6 @@ import { schemaSignUp } from './schema';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-// const schema = yup.object().shape({
-//   username: yup.string().required('Username is required').label('User Name'),
-//   email: yup.string().email().required('Email is required').label('Email'),
-//   phone: yup.string().required('Phone is required').label('Phone'),
-//   password: yup
-//     .string()
-//     .required('Password is required')
-//     .matches(
-//       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-//       'Password must have at least 8 characters, one uppercase, one number',
-//     )
-//     .label('Password'),
-//   // confirmPassword: yup
-//   //   .string()
-//   //   .oneOf([yup.ref('password')], 'Passwords must match')
-//   //   .required('Confirm Password is required')
-//   //   .label('Confirm Password'),
-// });
-
-
 
 const SignUpScreen = ({ navigation }) => {
 
@@ -61,16 +41,14 @@ const SignUpScreen = ({ navigation }) => {
   console.log(errors);
   const handleRegister = async (data) => {
   console.log(data);
-  
     try {
       const response = await register({
-
         username :data.fullname,
         password: data.password,
         email : data.email,
         phone :data.phone
       })
-      response && console.log('register successfull');
+      response && navigation.navigate('LoginScreen');
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +59,6 @@ const SignUpScreen = ({ navigation }) => {
     <ScrollView>
       <KeyboardAvoidingView>
         <StatusBar hidden />
-
         <View style={styles.container}>
           <Image
             style={{
@@ -122,7 +99,7 @@ const SignUpScreen = ({ navigation }) => {
                 <InputField
                 value={value}
                 placeholder="User name"
-                error= {errors?.fullName?.message}
+                error= {errors?.username?.message}
                 onChangeText={value => setValue('username', value)}
               />
               )}
@@ -168,25 +145,6 @@ const SignUpScreen = ({ navigation }) => {
               /> 
               )}
             />
-              {/* <InputField
-                placeholder="Full name"
-                onChangeText={setFullName}
-              />
-              <InputField
-                placeholder="Email"
-                onChangeText={setEmail}
-                error={checkError?.email}
-              />
-              <InputField
-                placeholder="Phone"
-                onChangeText={setPhone}
-              />
-              <InputField
-                inputType={'password'}
-                placeholder="Password"
-                password={true}
-                onChangeText={setPassword}
-              /> */}
 
             </View>
             <Text style={{

@@ -25,7 +25,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import { schemaSignIn } from './schema';
 
-
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const LoginScreen = ({onLogin, navigation}) => {

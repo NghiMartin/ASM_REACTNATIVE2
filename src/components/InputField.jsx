@@ -24,6 +24,7 @@ export default function InputField  (props)  {
         {password ? (
           <Icon
             onPress={() => setHidePassword(!hidePassword)}
+            size={20}
             name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
           />
         ) : (Icons) }

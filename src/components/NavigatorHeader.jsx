@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react'
 import RowComponent from './RowComponent';
-import { FONTSIZE } from '../assets';
+import { COLORS, FONTFAMILY, FONTSIZE } from '../assets';
+import { ArrowLeft2 } from 'iconsax-react-native';
 
-const NavigatorHeader = ({ iconLeft, title, iconRight, style, actionLeft, actionRight }) => {
+const NavigatorHeader = ({ iconLeft, title, iconRight, actionLeft, actionRight }) => {
     return (
-        <RowComponent justify={ 'space-between'} styles={{width: '100%', paddingVertical: 10}}>
+        <RowComponent justify={ 'space-between'} styles={{width: '100%', paddingVertical: 10, paddingHorizontal: 10,
+        }}>
             <TouchableOpacity style={[styles.imgContainer, {}]} onPress={actionLeft}>
-                {!!iconLeft && iconLeft}
+            <ArrowLeft2 size="32" color={COLORS.BLACK}/>
             </TouchableOpacity>
             <Text style={styles.txt}>{title}</Text>
             <TouchableOpacity style={[styles.imgContainer, {}]} onPress={actionRight}>
@@ -27,8 +29,8 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: 'black',
         textTransform: 'uppercase',
-        fontFamily: 'Lato',
-        // lineHeight: 20,
+        fontFamily: FONTFAMILY.poppins_medium,
+        color: COLORS.greenHex
     },
     icon: {
         width: 24,

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import ItemProduct from './ItemProduct';
+import { FONTFAMILY } from '../assets';
 
 const Show4Product = (props) => {
     const { data,
@@ -11,8 +12,8 @@ const Show4Product = (props) => {
         onPressShowMore,
         txtShowMore,
         quantityShow,
+        isHidebtnAdd
     } = props;
-
     const [dataShow, setdataShow] = useState([])
 
     useEffect(() => {
@@ -28,7 +29,9 @@ const Show4Product = (props) => {
             <Text style={styles.title}>{title}</Text>
             <ItemProduct
             navigation={navigation}
-            data={dataShow} />
+            data={dataShow}
+            isHidebtnAdd= {isHidebtnAdd}
+             />
             {txtShowMore && <TouchableOpacity style={styles.showMore} onPress={onPressShowMore} >
                 <Text style={styles.txtShowMore}>Xem thêm {title}</Text>
             </TouchableOpacity>}
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
         color: '#221F1F',
         textAlign: 'right',
         fontWeight: '500',
-        fontFamily: 'Lato',
+        fontFamily: FONTFAMILY.poppins_medium,
         fontSize: 16,
         lineHeight: 20,
         textDecorationLine: 'underline',

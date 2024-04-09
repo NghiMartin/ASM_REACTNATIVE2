@@ -20,7 +20,7 @@ const AppRouters = () => {
     }, 2000);
 
     return () => clearTimeout(timeout);
-  }, [user,authToken]);
+  }, [user]);
 
   const checkLogin = async () => {
     const token = await getToken();

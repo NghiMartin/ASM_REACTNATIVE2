@@ -10,6 +10,7 @@ const COLORS = {
   greenHex: '#4CAF50',
   RED:'red',
   GRAY: 'gray',
+  GRAYLIGHT: '#eee',
   BLACK: 'black',
   WHITE: 'white'
 }

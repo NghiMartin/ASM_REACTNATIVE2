@@ -25,14 +25,16 @@ return(
     style={styles.container}
     >
          <NavigatorHeader
-        iconLeft={<ArrowLeft2 size="32" color={COLORS.BLACK}/>}
         title={"GIỎ HÀNG"}
         style={{ height: 55, marginTop: 20, paddingHorizontal: 24, }}
         actionLeft={() => navigation.goBack()}
         iconRight={ <Trash size="32" color={COLORS.BLACK}/>}
         actionRight={() => {}}
       />
-    <ScrollView >
+    <ScrollView 
+    showsVerticalScrollIndicator={false}
+    style ={{marginBottom: 200}}
+    >
         {dataAll && dataAll.map(item => <ItemCartProduct  getData={getAlldataCartHandle} data={item} key={item._id}/>)}
     </ScrollView>
     <PaymentFooter getpriceTotal={() => getTotalPrice(dataAll)}/>
@@ -42,8 +44,8 @@ return(
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
         flex: 1,
+        alignItems: 'center',
         backgroundColor: 'white',
         paddingHorizontal: 20,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 ,
