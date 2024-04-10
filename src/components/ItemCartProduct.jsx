@@ -1,12 +1,13 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { COLORS, FONTFAMILY, FONTSIZE } from "../assets";
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from "../assets";
 import RowComponent from "./RowComponent";
 import CustomButton from "./CustomButton";
 import { AddSquare, MinusSquare } from "iconsax-react-native";
 import CheckBox from "./CheckBox";
-import { decreaseCart, increaseCart } from '../api/cart/cartApi';
+import { decreaseCart, deleleByIdCart, increaseCart } from '../api/cart/cartApi';
 import { useDispatch, useSelector } from 'react-redux';
-export default function ItemCartProduct ({data, onPress, navigation, getData}) {
+import { useState } from "react";
+export default function ItemCartProduct ({data, handleIsCheckBox, handleUnCheckBox, onPress, navigation, getData}) {
     const user = useSelector((state) => state.user);
 
     const handleIncreaseCart= async (idProduct)=> {
@@ -24,21 +25,88 @@ export default function ItemCartProduct ({data, onPress, navigation, getData}) {
         })
         await getData();
     }
+    const handleDeleteCart= async (idProduct)=> {
+        const response = await deleleByIdCart({
+            idUser: user?._id,
+            idProduct: idProduct
+        })
+        await getData();
+    }
+
+
+    const [showModal, setShowModal] = useState(false);
+
+    const handleDelete = () => {
+      setShowModal(true);
+    };
+  
+   
+
+    const handleCancelDelete = () => {
+      setShowModal(false);
+    };
+
+    const [isCheckbox, setisCheckbox] = useState(false);
+
+    const handleIsCheckboxItem = () => {
+        if(isCheckbox) {
+           handleUnCheckBox(data?.idProduct);
+           setisCheckbox(!isCheckbox);
+        }else{
+            handleIsCheckBox(data?.idProduct);
+            setisCheckbox(!isCheckbox);
+        }
+       
+
+    }
+
+
     return (
         <View style={styles.container}>
-            <CheckBox  />
+            <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalMessage}>
+              Are you sure want to delete product from cart?
+            </Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => handleDeleteCart(data?.idProduct)}
+              >
+                <Text style={styles.modalButtonText}>Yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.cancelButton]}
+                onPress={handleCancelDelete}
+              >
+                <Text style={styles.modalButtonText}>No</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+            <CheckBox isCheckbox={isCheckbox} onPress={handleIsCheckboxItem} />
             <Image
             source={{uri: data?.product?.image[0]}}
             style={styles.image}
             resizeMode="contain" /> 
-            <View>
+            <View >
             <Text style={styles.title}>{data?.product?.name} | {data?.product?.size} </Text>
-            <Text style={styles.price}>{data?.product?.price} đ </Text>
+            <Text style={styles.price}>{Number(data?.product?.price).toLocaleString('vi-VN')} đ </Text>
             <Text style={styles.status}>{data?.product?.status} </Text>
-            <View>
+            <View 
+            style={styles.buttonsList}
+            >
             <RowComponent
                justify='space-between'
-               key= {data.key}
+               styles= {{width: '200'}}
+           
             >
             <CustomButton
             isIcon={true}
@@ -48,7 +116,9 @@ export default function ItemCartProduct ({data, onPress, navigation, getData}) {
                 color={COLORS.greenHex}
                />}
             />
-            <Text>{data?.quantity}</Text>
+            <Text
+            style={styles.quantity}
+            >{data?.quantity}</Text>
             <CustomButton
             isIcon={true}
             onPress={ () => handleIncreaseCart(data?.idProduct)}
@@ -57,7 +127,9 @@ export default function ItemCartProduct ({data, onPress, navigation, getData}) {
                 color={COLORS.greenHex}
                />}
             />
-                 <TouchableOpacity>
+                 <TouchableOpacity
+                 onPress={handleDelete}
+                 >
                 <Text style={styles.btnDelete}>Xoá</Text>
             </TouchableOpacity>
             </RowComponent>
@@ -92,6 +164,13 @@ const styles = StyleSheet.create({
         fontSize: FONTSIZE.size_16,
         fontFamily: FONTFAMILY.poppins_medium
     },
+    quantity: {
+        fontFamily: FONTFAMILY.poppins_medium,
+        fontSize: FONTSIZE.size_14
+    },
+    buttonsList: {
+        width: 150
+    },
     status:{
         fontSize: FONTSIZE.size_16,
         fontFamily: FONTFAMILY.poppins_medium
@@ -100,5 +179,49 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         fontFamily: FONTFAMILY.poppins_bold,
         color: COLORS.GRAY
-    }
+    },
+    modalBackground: {
+        flex: 1,
+        backgroundColor: 'rgba(227, 228, 230, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalContent: {
+        backgroundColor: COLORS.BLACK,
+        padding: SPACING.space_20,
+        borderRadius: BORDERRADIUS.radius_10,
+        alignItems: 'center',
+        width: 350,
+        height: 200,
+        justifyContent: 'center'
+      },
+      modalMessage: {
+        fontFamily: FONTFAMILY.poppins_regular,
+        fontSize: FONTSIZE.size_16,
+        color: COLORS.WHITE,
+        marginBottom: SPACING.space_20,
+      },
+      modalButtons: {
+        flexDirection: 'row',
+      },
+      modalButton: {
+        width: 100,
+        alignItems: 'center',
+        paddingVertical: SPACING.space_10,
+        paddingHorizontal: SPACING.space_20,
+        borderRadius: BORDERRADIUS.radius_10,
+        marginHorizontal: SPACING.space_10,
+        backgroundColor: COLORS.primaryGreenHex,
+      },
+      modalButtonText: {
+        fontFamily: FONTFAMILY.poppins_semibold,
+        fontSize: FONTSIZE.size_16,
+        color: COLORS.WHITE,
+      },
+      cancelButton: {
+        borderRadius: 10,
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        borderColor: COLORS.WHITE,
+      },
 })

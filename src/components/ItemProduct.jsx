@@ -24,7 +24,7 @@ const handleAddCart= async (idProduct,size,price)=> {
                 resizeMode='contain' />
             <Text style={styles.txtName}>{item?.name}</Text>
             <Text style={styles.txtType}>{item?.detailType || 'Ưa bóng'}</Text>
-            <Text style={styles.txtPrice}>{item?.price + ' đ' || '250.000đ'}</Text>
+            <Text style={styles.txtPrice}>{Number(item?.price).toLocaleString('vi-VN') + ' đ' || '250.000đ'}</Text>
             <View style={styles.btnAddCart}>
            { isHidebtnAdd || <CustomButton
             isIcon={true}

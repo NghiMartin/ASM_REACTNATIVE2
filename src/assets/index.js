@@ -4,7 +4,22 @@ const AppImages = {
     google_icon: require('./icons/google.png'),
     splash_screen: require('./shape/splash_screen.png')
   };
-
+ const SPACING = {
+    space_2: 2,
+    space_4: 4,
+    space_8: 8,
+    space_10: 10,
+    space_12: 12,
+    space_15: 15,
+    space_16: 16,
+    space_18: 18,
+    space_20: 20,
+    space_24: 24,
+    space_28: 28,
+    space_30: 30,
+    space_32: 32,
+    space_36: 36,
+  };
 const COLORS = {
   primaryGreenHex : '#007537',
   greenHex: '#4CAF50',
@@ -48,5 +63,5 @@ const COLORS = {
   radius_25: 25,
 };
 
-  export { AppImages, COLORS ,FONTFAMILY, BORDERRADIUS ,FONTSIZE};
+  export { AppImages, COLORS ,FONTFAMILY, BORDERRADIUS ,FONTSIZE,SPACING};
   

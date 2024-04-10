@@ -37,7 +37,7 @@ const increaseCart = async (obj) => {
 }
 const decreaseCart = async (obj) => {
     try {
-        const response = await axios.post(`${baseURL}/cart/delete`, obj);
+        const response = await axios.post(`${baseURL}/cart/decrease`, obj);
         if (response.status === 200) {
             const data =  response.data;
             console.log({data})
@@ -50,4 +50,45 @@ const decreaseCart = async (obj) => {
             console.error('Đã xảy ra lỗi:', error);
         }
 }
-export {getAllCart, increaseCart, decreaseCart}
+const deleleByIdCart = async (obj) => {
+  try {
+      const response = await axios.post(`${baseURL}/cart/delete-by-id`, obj);
+      if (response.status === 200) {
+          const data =  response.data;
+          console.log({data})
+              ToastAndroid.showWithGravity(
+                `Product đã được xoá thành công!`,
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+              );
+        return data.data;
+        } else {
+          console.error('Xảy ra lỗi DeleteCart');
+        }
+        console.log(data.json());
+      } catch (error) {
+          console.error('Đã xảy ra lỗi:', error);
+      }
+}
+const deleleAllByIdCart = async (obj) => {
+  console.log({obj});
+  try {
+      const response = await axios.post(`${baseURL}/cart/delete-all-by-id`, obj);
+      if (response.status === 200) {
+          const data =  response.data;
+          console.log({data})
+              ToastAndroid.showWithGravity(
+                `Product đã được xoá thành công!`,
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+              );
+        return data.data;
+        } else {
+          console.error('Xảy ra lỗi DeleteCart');
+        }
+        console.log(data.json());
+      } catch (error) {
+          console.error('Đã xảy ra lỗi:', error);
+      }
+}
+export {getAllCart, increaseCart, decreaseCart, deleleByIdCart, deleleAllByIdCart}

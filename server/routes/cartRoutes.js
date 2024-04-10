@@ -34,7 +34,7 @@ router.post("/add", async (req, res) => {
     }
   });
   // DECREASE CART
-  router.post("/delete", async (req, res) => {
+  router.post("/decrease", async (req, res) => {
     try {
       const { idUser, idProduct } = req.body;
 
@@ -50,7 +50,7 @@ router.post("/add", async (req, res) => {
         } else {
           // Nếu số lượng sản phẩm chỉ còn 1, xoá sản phẩm ra khỏi giỏ hàng
           await modelCart.deleteOne({ idUser, idProduct });
-          res.json({ status: "200", message: "Xoá sản phẩm ra khỏi giỏ hàng thành công" });
+          res.json({ status: "200", message: "Xoá sản phẩm ra khỏi giỏ hàng thành công", data: result });
         }
       } else {
         // Nếu sản phẩm không tồn tại trong giỏ hàng
@@ -61,7 +61,39 @@ router.post("/add", async (req, res) => {
       res.status(500).json({ status: "500", error: "Đã xảy ra lỗi trong quá trình xử lý yêu cầu" });
     }
   });
+// DELETE BY ID CART
+router.post("/delete-by-id", async (req, res) => {
+  try {
+    const { idUser, idProduct } = req.body;
 
+    const result =  await modelCart.deleteOne({ idUser, idProduct });
+       result && res.json({ status: "200", message: "Xoá sản phẩm ra khỏi giỏ hàng thành công" , data: result});
+      
+   
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ status: "500", error: "Đã xảy ra lỗi trong quá trình xử lý yêu cầu" });
+  }
+});
+// DELETE ALL BY ID CART
+router.post("/delete-all-by-id", async (req, res) => {
+  try {
+    const { idUser, idProduct } = req.body;
+    console.log({idProduct});
+    console.log({idUser});
+
+    const result = await modelCart.deleteMany({ idUser, idProduct: { $in: idProduct } });
+    console.log({result});
+    if (result.deletedCount >0) {
+      res.json({ status: "200", message: "Xoá sản phẩm ra khỏi giỏ hàng thành công" ,data: result});
+    } else {
+      res.json({ status: "404", message: "Không tìm thấy sản phẩm trong giỏ hàng" });
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ status: "500", error: "Đã xảy ra lỗi trong quá trình xử lý yêu cầu" });
+  }
+});
   // GET DATA CART
   router.get("/list", async (req, res) => {
     try {

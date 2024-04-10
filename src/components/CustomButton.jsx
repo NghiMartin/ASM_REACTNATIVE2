@@ -6,6 +6,10 @@ export default function CustomButton({label, onPress, isIcon, Icon, style}) {
   return (
     <TouchableOpacity
     onPress={onPress}
+    style={{
+    alignItems: 'center'
+
+    }}
   >
     {isIcon ? 
     (
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: BORDERRADIUS.radius_10,
     marginVertical: 20,
-    width: 350
+    width: 350,
   },
   text:{
     textAlign: 'center',

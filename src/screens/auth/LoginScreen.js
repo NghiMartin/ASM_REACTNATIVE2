@@ -36,12 +36,12 @@ const LoginScreen = ({onLogin, navigation}) => {
   } = useForm({
     resolver: yupResolver(schemaSignIn),
   });
-  const [isCheckRemember, setisCheckRemember] = useState(false);
+  const [isCheckbox, setisCheckbox] = useState(false);
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  const handleCheckBox = () => setisCheckRemember(!isCheckRemember);
+  const handleCheckBox = () => setisCheckbox(!isCheckbox);
 
   const handleLogin= async(data)=>{
     try {
@@ -128,7 +128,7 @@ const LoginScreen = ({onLogin, navigation}) => {
               marginTop: 20
             }}>
             <CheckBox
-              isCheckRemember={isCheckRemember}
+              isCheckbox={isCheckbox}
               onPress={handleCheckBox}
             />
 
